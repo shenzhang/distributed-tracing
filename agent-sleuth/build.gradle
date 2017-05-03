@@ -1,0 +1,7 @@
+dependencies {
+    compile(
+	    project(':agent'),
+            'org.springframework.boot:spring-boot-starter-aop:1.4.1.RELEASE',
+            'org.springframework.cloud:spring-cloud-starter-sleuth:1.2.0.RELEASE'
+    )
+}

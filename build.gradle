@@ -1,0 +1,51 @@
+allprojects {
+    apply plugin: 'idea'
+    apply plugin: 'java'
+
+    repositories {
+        maven { url 'http://127.0.0.1:8081/nexus/content/groups/public' }
+        jcenter()
+    }
+}
+
+idea {
+    project {
+        jdkName = '1.8'
+        languageLevel = '1.8'
+    }
+}
+
+idea.project.ipr {
+    withXml { provider ->
+        provider.node.component
+                .find { it.@name == 'VcsDirectoryMappings' }
+                .mapping.@vcs = 'Git'
+    }
+}
+
+jar {
+    baseName = 'myproject'
+    version = '0.0.1-SNAPSHOT'
+}
+
+buildscript {
+    ext {
+        springBootVersion = '1.4.1.RELEASE'
+    }
+
+    repositories {
+        maven { url 'http://127.0.0.1:8081/nexus/content/groups/public' }
+        jcenter()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.0'
+}
+
+
+

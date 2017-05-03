@@ -1,0 +1,8 @@
+spring.application.name: example-api
+
+server.port: 10000
+
+tracing:
+  agent:
+    monitor:
+      url: http://localhost:8080/spans

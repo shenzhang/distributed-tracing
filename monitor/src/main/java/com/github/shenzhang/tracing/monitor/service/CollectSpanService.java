@@ -1,8 +1,8 @@
-package com.github.shenzhang.service;
+package com.github.shenzhang.tracing.monitor.service;
 
-import com.github.shenzhang.dao.SpanDao;
-import com.github.shenzhang.domain.Span;
-import com.github.shenzhang.exception.DaoException;
+import com.github.shenzhang.tracing.monitor.dao.SpanDao;
+import com.github.shenzhang.tracing.monitor.domain.Span;
+import com.github.shenzhang.tracing.monitor.exception.DaoException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

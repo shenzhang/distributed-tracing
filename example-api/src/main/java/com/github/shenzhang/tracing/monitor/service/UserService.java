@@ -1,6 +1,6 @@
-package com.github.shenzhang.service;
+package com.github.shenzhang.tracing.monitor.service;
 
-import com.github.shenzhang.domain.User;
+import com.github.shenzhang.tracing.monitor.domain.User;
 import com.github.shenzhang.tracing.agent.annotation.Trace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

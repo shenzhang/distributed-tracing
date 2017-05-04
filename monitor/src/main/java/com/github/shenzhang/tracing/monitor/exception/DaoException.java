@@ -1,4 +1,4 @@
-package com.github.shenzhang.exception;
+package com.github.shenzhang.tracing.monitor.exception;
 
 /**
  * User: Zhang Shen

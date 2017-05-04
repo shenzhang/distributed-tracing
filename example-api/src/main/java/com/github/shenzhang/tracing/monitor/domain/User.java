@@ -1,4 +1,4 @@
-package com.github.shenzhang.domain;
+package com.github.shenzhang.tracing.monitor.domain;
 
 /**
  * User: Zhang Shen

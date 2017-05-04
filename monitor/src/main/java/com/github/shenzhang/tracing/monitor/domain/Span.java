@@ -1,19 +1,19 @@
-package com.github.shenzhang.controller.dto;
+package com.github.shenzhang.tracing.monitor.domain;
 
 /**
  * User: Zhang Shen
  * Date: 5/2/17
- * Time: 4:32 PM.
+ * Time: 4:11 PM.
  */
-public class SpanInRequest {
+public class Span {
     private String id;
-    private String parentId;
     private String traceId;
+    private String parentId;
     private String source;
     private String name;
-    private String begin;
-    private String end;
-    private String duration;
+    private long begin;
+    private long end;
+    private int duration;
 
     public String getId() {
         return id;
@@ -47,27 +47,27 @@ public class SpanInRequest {
         this.name = name;
     }
 
-    public String getBegin() {
+    public long getBegin() {
         return begin;
     }
 
-    public void setBegin(String begin) {
+    public void setBegin(long begin) {
         this.begin = begin;
     }
 
-    public String getEnd() {
+    public long getEnd() {
         return end;
     }
 
-    public void setEnd(String end) {
+    public void setEnd(long end) {
         this.end = end;
     }
 
-    public String getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 

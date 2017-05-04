@@ -1,7 +1,7 @@
 package com.github.shenzhang.controller;
 
-import com.github.shenzhang.domain.User;
-import com.github.shenzhang.service.UserService;
+import com.github.shenzhang.tracing.monitor.domain.User;
+import com.github.shenzhang.tracing.monitor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -3,11 +3,13 @@ CREATE KEYSPACE tracing WITH replication = {'class': 'SimpleStrategy', 'replicat
 USE tracing;
 
 CREATE TABLE span(
-    id  varchar primary key,
+    id  varchar,
     parent_id varchar,
     trace_id varchar,
     source varchar,
     begin_time bigint,
     end_time bigint,
-    duration int
+    duration int,
+
+    primary key(trace_id, begin_time)
 );

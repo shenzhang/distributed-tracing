@@ -1,9 +1,9 @@
-package com.github.shenzhang.dao.cassandra;
+package com.github.shenzhang.tracing.monitor.dao.cassandra;
 
 import com.datastax.driver.core.*;
-import com.github.shenzhang.dao.SpanDao;
-import com.github.shenzhang.domain.Span;
-import com.github.shenzhang.exception.DaoException;
+import com.github.shenzhang.tracing.monitor.dao.SpanDao;
+import com.github.shenzhang.tracing.monitor.domain.Span;
+import com.github.shenzhang.tracing.monitor.exception.DaoException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -33,6 +33,7 @@ public class SpanDaoImpl implements SpanDao, InitializingBean {
         }
     }
 
+    @Override
     public List<Span> getSpanByTraceId(String traceId) throws DaoException {
         BoundStatement bind = searchByTraceStatement.bind(traceId);
         ResultSet resultSet = session.execute(bind);
@@ -60,6 +61,6 @@ public class SpanDaoImpl implements SpanDao, InitializingBean {
                 "insert into span(id, trace_id, parent_id, source, begin_time, end_time, duration) " +
                         "values(?, ?, ?, ?, ?, ?, ?)");
 
-//        searchByTraceStatement = session.prepare("select * from span where trace_id = ?");
+        searchByTraceStatement = session.prepare("select * from span where trace_id = ?");
     }
 }

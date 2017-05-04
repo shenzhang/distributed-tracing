@@ -1,19 +1,19 @@
-package com.github.shenzhang.domain;
+package com.github.shenzhang.tracing.monitor.controller.dto.collect;
 
 /**
  * User: Zhang Shen
  * Date: 5/2/17
- * Time: 4:11 PM.
+ * Time: 4:32 PM.
  */
-public class Span {
+public class SpanDto {
     private String id;
-    private String traceId;
     private String parentId;
+    private String traceId;
     private String source;
     private String name;
-    private long begin;
-    private long end;
-    private int duration;
+    private String begin;
+    private String end;
+    private String duration;
 
     public String getId() {
         return id;
@@ -47,27 +47,27 @@ public class Span {
         this.name = name;
     }
 
-    public long getBegin() {
+    public String getBegin() {
         return begin;
     }
 
-    public void setBegin(long begin) {
+    public void setBegin(String begin) {
         this.begin = begin;
     }
 
-    public long getEnd() {
+    public String getEnd() {
         return end;
     }
 
-    public void setEnd(long end) {
+    public void setEnd(String end) {
         this.end = end;
     }
 
-    public int getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 

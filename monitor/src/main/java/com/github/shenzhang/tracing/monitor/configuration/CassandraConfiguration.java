@@ -1,4 +1,4 @@
-package com.github.shenzhang.configuration;
+package com.github.shenzhang.tracing.monitor.configuration;
 
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
@@ -16,12 +16,14 @@ import org.springframework.context.event.ContextStoppedEvent;
 @Configuration
 public class CassandraConfiguration implements ApplicationListener<ContextStoppedEvent> {
     @Autowired
+    private TracingMonitorProperties properties;
+    @Autowired
     private Session session;
 
     @Bean
     public Session session() {
-        Cluster cluster = Cluster.builder().addContactPoints("localhost").build();
-        return cluster.connect("tracing");
+        Cluster cluster = Cluster.builder().addContactPoints(properties.getCassandra().getServers()).build();
+        return cluster.connect(properties.getCassandra().getKeyspace());
     }
 
     @Override

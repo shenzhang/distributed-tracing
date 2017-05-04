@@ -1,4 +1,4 @@
-package com.github.shenzhang;
+package com.github.shenzhang.tracing.monitor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;

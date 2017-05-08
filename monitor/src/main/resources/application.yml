@@ -7,3 +7,5 @@ tracing:
     cassandra:
       servers: localhost
       keyspace: tracing
+
+spring.thymeleaf.cache: false

@@ -26,11 +26,12 @@ public class SleuthSpanReporter implements SpanReporter {
             mySpan.setParentId(Span.idToHex(span.getParents().get(0)));
         }
         mySpan.setTraceId(Span.idToHex(span.getTraceId()));
-
+        mySpan.setName(span.getName());
         mySpan.setSource(applicationName);
-        mySpan.setBegin(span.getBegin());
-        mySpan.setEnd(span.getEnd());
+        mySpan.setBeginTime(span.getBegin());
+        mySpan.setEndTime(span.getEnd());
         mySpan.setDuration(span.getEnd() - span.getBegin());
+        mySpan.setSuccess(!span.tags().containsKey(Span.SPAN_ERROR_TAG_NAME));
 
         forwarder.forward(mySpan);
     }

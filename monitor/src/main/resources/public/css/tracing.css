@@ -1,0 +1,35 @@
+.bar-container {
+    padding-top: 3px;
+}
+
+.bar {
+    width: 1000px;
+    font-size: 12px;
+    overflow: visible;
+}
+
+.bar .app {
+    background-color: #2aabd2;
+    display: inline-block;
+    /*position: absolute;*/
+}
+
+.bar .duration {
+    background-color: #bed2d2;
+    display: inline-block;
+    position: absolute;
+}
+
+.bar .duration-info {
+    position: absolute;
+    display: inline-block;
+}
+
+.bar .error {
+    background-color: red;
+}
+
+.bar-children {
+    position: relative;
+    /*padding-left: 10px;*/
+}

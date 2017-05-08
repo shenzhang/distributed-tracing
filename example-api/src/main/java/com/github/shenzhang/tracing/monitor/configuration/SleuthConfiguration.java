@@ -1,4 +1,4 @@
-package com.github.shenzhang.configuration;
+package com.github.shenzhang.tracing.monitor.configuration;
 
 import org.springframework.cloud.sleuth.Sampler;
 import org.springframework.cloud.sleuth.sampler.AlwaysSampler;

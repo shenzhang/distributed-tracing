@@ -11,9 +11,10 @@ public class SpanDto {
     private String traceId;
     private String source;
     private String name;
-    private String begin;
-    private String end;
+    private long beginTime;
+    private long endTime;
     private String duration;
+    private boolean success;
 
     public String getId() {
         return id;
@@ -47,20 +48,20 @@ public class SpanDto {
         this.name = name;
     }
 
-    public String getBegin() {
-        return begin;
+    public long getBeginTime() {
+        return beginTime;
     }
 
-    public void setBegin(String begin) {
-        this.begin = begin;
+    public void setBeginTime(long beginTime) {
+        this.beginTime = beginTime;
     }
 
-    public String getEnd() {
-        return end;
+    public long getEndTime() {
+        return endTime;
     }
 
-    public void setEnd(String end) {
-        this.end = end;
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
     }
 
     public String getDuration() {
@@ -77,5 +78,13 @@ public class SpanDto {
 
     public void setTraceId(String traceId) {
         this.traceId = traceId;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 }

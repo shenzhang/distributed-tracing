@@ -11,9 +11,10 @@ public class Span {
     private String parentId;
     private String source;
     private String name;
-    private long begin;
-    private long end;
+    private long beginTime;
+    private long endTime;
     private long duration;
+    private boolean success;
 
     public String getId() {
         return id;
@@ -47,20 +48,20 @@ public class Span {
         this.name = name;
     }
 
-    public long getBegin() {
-        return begin;
+    public long getBeginTime() {
+        return beginTime;
     }
 
-    public void setBegin(long begin) {
-        this.begin = begin;
+    public void setBeginTime(long beginTime) {
+        this.beginTime = beginTime;
     }
 
-    public long getEnd() {
-        return end;
+    public long getEndTime() {
+        return endTime;
     }
 
-    public void setEnd(long end) {
-        this.end = end;
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
     }
 
     public long getDuration() {
@@ -77,5 +78,13 @@ public class Span {
 
     public void setTraceId(String traceId) {
         this.traceId = traceId;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 }

@@ -14,6 +14,7 @@ public class Span {
     private long begin;
     private long end;
     private int duration;
+    private boolean success;
 
     public String getId() {
         return id;
@@ -77,5 +78,13 @@ public class Span {
 
     public void setTraceId(String traceId) {
         this.traceId = traceId;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 }

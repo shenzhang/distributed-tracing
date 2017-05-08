@@ -28,7 +28,9 @@ public class SpanDaoImpl implements SpanDao, InitializingBean {
     public void addSpan(List<Span> spans) throws DaoException {
         for (Span span : spans) {
             BoundStatement bind = insertStatement.bind(span.getId(), span.getTraceId(), span.getParentId(),
-                    span.getSource(), span.getBegin(), span.getEnd(), span.getDuration());
+                    span.getName(), span.getSource(), span.getBegin(), span.getEnd(), span.getDuration(),
+                    span.isSuccess());
+
             session.execute(bind);
         }
     }
@@ -44,9 +46,10 @@ public class SpanDaoImpl implements SpanDao, InitializingBean {
             span.setId(row.getString("id"));
             span.setParentId(row.getString("parent_id"));
             span.setTraceId(row.getString("trace_id"));
+            span.setName(row.getString("name"));
             span.setSource(row.getString("source"));
-            span.setBegin(row.getLong("begin"));
-            span.setEnd(row.getLong("end"));
+            span.setBegin(row.getLong("begin_time"));
+            span.setEnd(row.getLong("end_time"));
             span.setDuration(row.getInt("duration"));
 
             spans.add(span);
@@ -58,8 +61,8 @@ public class SpanDaoImpl implements SpanDao, InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         insertStatement = session.prepare(
-                "insert into span(id, trace_id, parent_id, source, begin_time, end_time, duration) " +
-                        "values(?, ?, ?, ?, ?, ?, ?)");
+                "insert into span(id, trace_id, parent_id, name, source, begin_time, end_time, duration, success) " +
+                        "values(?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         searchByTraceStatement = session.prepare("select * from span where trace_id = ?");
     }

@@ -13,10 +13,12 @@ public class SpanDtoTranslator {
         span.setId(spanDto.getId());
         span.setParentId(spanDto.getParentId());
         span.setTraceId(spanDto.getTraceId());
+        span.setName(spanDto.getName());
         span.setSource(spanDto.getSource());
-        span.setBegin(Long.parseLong(spanDto.getBegin()));
-        span.setEnd(Long.parseLong(spanDto.getEnd()));
+        span.setBegin(spanDto.getBeginTime());
+        span.setEnd(spanDto.getEndTime());
         span.setDuration(Integer.parseInt(spanDto.getDuration()));
+        span.setSuccess(spanDto.isSuccess());
 
         return span;
     }
@@ -27,10 +29,12 @@ public class SpanDtoTranslator {
         spanDto.setId(span.getId());
         spanDto.setParentId(span.getParentId());
         spanDto.setTraceId(span.getTraceId());
+        spanDto.setName(span.getName());
         spanDto.setSource(span.getSource());
-        spanDto.setBegin(Long.toString(span.getBegin()));
-        spanDto.setEnd(Long.toString(span.getEnd()));
+        spanDto.setBeginTime(span.getBegin());
+        spanDto.setEndTime(span.getEnd());
         spanDto.setDuration(Integer.toString(span.getDuration()));
+        spanDto.setSuccess(span.isSuccess());
 
         return spanDto;
     }

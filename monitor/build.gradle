@@ -12,7 +12,9 @@ dependencies {
             "org.springframework.boot:spring-boot-starter-aop:$springBootVersion",
             "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion",
             "org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion",
+
             'com.datastax.cassandra:cassandra-driver-core:3.2.0',
+            'org.influxdb:influxdb-java:2.5',
 
             'com.google.guava:guava:18.0'
     )

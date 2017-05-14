@@ -8,4 +8,11 @@ tracing:
       servers: localhost
       keyspace: tracing
 
+metrics.puller:
+  influxdb:
+    url: http://localhost:8086
+    database: customer
+    username: test
+    password: 123
+
 spring.thymeleaf.cache: false

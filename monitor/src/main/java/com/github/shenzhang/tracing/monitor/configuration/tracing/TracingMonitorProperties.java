@@ -1,4 +1,4 @@
-package com.github.shenzhang.tracing.monitor.configuration;
+package com.github.shenzhang.tracing.monitor.configuration.tracing;
 
 import org.springframework.boot.autoconfigure.security.SecurityPrerequisite;
 import org.springframework.boot.context.properties.ConfigurationProperties;

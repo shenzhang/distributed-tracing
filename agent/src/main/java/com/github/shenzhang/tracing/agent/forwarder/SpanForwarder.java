@@ -56,7 +56,7 @@ public class SpanForwarder {
 
             connection.disconnect();
         } catch (Exception e) {
-            LOGGER.error("Send span failed", e);
+            LOGGER.error("Send distributed-tracing span failed - {}:{}", e.getClass().getName(), e.getMessage());
         }
     }
 }

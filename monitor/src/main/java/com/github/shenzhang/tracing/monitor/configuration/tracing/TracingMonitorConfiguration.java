@@ -1,4 +1,4 @@
-package com.github.shenzhang.tracing.monitor.configuration;
+package com.github.shenzhang.tracing.monitor.configuration.tracing;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class TracingMonitorConfiguration {
     @Bean
-    public static TracingMonitorProperties properties() {
+    public static TracingMonitorProperties tracingMonitorProperties() {
         return new TracingMonitorProperties();
     }
 }

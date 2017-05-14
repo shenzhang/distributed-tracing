@@ -1,4 +1,4 @@
-package com.github.shenzhang.tracing.monitor.configuration;
+package com.github.shenzhang.tracing.monitor.configuration.tracing;
 
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;

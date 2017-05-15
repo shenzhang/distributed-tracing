@@ -1,9 +1,12 @@
 dependencies {
     compile(
             'org.springframework.boot:spring-boot-starter-aop:1.4.1.RELEASE',
-            'org.springframework.cloud:spring-cloud-starter-sleuth:1.2.0.RELEASE',
             'org.apache.httpcomponents:httpclient:4.5.2',
             'com.google.code.gson:gson:2.7',
             'org.slf4j:slf4j-api:1.7.24'
+    )
+
+    compileOnly(
+            'org.springframework.cloud:spring-cloud-starter-sleuth:1.2.0.RELEASE'
     )
 }

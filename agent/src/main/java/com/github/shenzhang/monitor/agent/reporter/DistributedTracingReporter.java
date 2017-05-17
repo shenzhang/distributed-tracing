@@ -4,18 +4,18 @@ import com.github.shenzhang.monitor.agent.configuration.MonitorAgentProperties;
 import com.github.shenzhang.monitor.agent.domain.Span;
 import com.github.shenzhang.monitor.agent.tracing.TracingRepository;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLConnection;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -33,6 +33,8 @@ public class DistributedTracingReporter {
     @Autowired
     private MonitorAgentProperties properties;
 
+    private HttpClient httpClient = HttpClientBuilder.create().build();
+
     @Scheduled(fixedRate = 5000)
     public void report() {
         List<Span> spans = repository.get();
@@ -40,35 +42,17 @@ public class DistributedTracingReporter {
             return;
         }
 
+        Gson gson = new Gson();
+        HttpPost post = new HttpPost(properties.getTracing().getUrl());
+        post.setEntity(new StringEntity(gson.toJson(spans), ContentType.APPLICATION_JSON));
+
+
         try {
-            String urlString = properties.getTracing().getUrl();
-
-            URL url = new URI(urlString).toURL();
-            URLConnection urlConnection = url.openConnection();
-            if (!(urlConnection instanceof HttpURLConnection)) {
-                throw new Exception(String.format("Initialize connection failed, url = %s", urlString));
+            int code = httpClient.execute(post).getStatusLine().getStatusCode();
+            if (code != 201) {
+                LOGGER.error("Send distributed-tracing span failed - status code = ", code);
             }
-
-            HttpURLConnection connection = (HttpURLConnection)urlConnection;
-            connection.setInstanceFollowRedirects(false);
-            connection.setDoOutput(true);
-            connection.setRequestMethod("POST");
-            connection.addRequestProperty("Content-Type", "application/json");
-
-            connection.connect();
-            OutputStream outputStream = connection.getOutputStream();
-
-            Gson gson = new GsonBuilder().create();
-
-            outputStream.write(gson.toJson(spans).getBytes());
-            outputStream.flush();
-            outputStream.close();
-
-            connection.getResponseCode();
-            connection.disconnect();
-
-            LOGGER.info("Distributed tracing was reported");
-        } catch (Exception e) {
+        } catch (IOException e) {
             LOGGER.error("Send distributed-tracing span failed - {}:{}", e.getClass().getName(), e.getMessage());
         }
     }

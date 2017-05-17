@@ -1,5 +1,6 @@
 package com.github.shenzhang.monitor.agent.configuration;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -11,4 +12,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Configuration
 @EnableScheduling
 public class MonitorAgentConfiguration {
+    @Bean
+    public static MonitorAgentProperties properties() {
+        return new MonitorAgentProperties();
+    }
 }

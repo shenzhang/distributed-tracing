@@ -61,8 +61,6 @@ public class MetricsReporter implements InitializingBean {
         }
 
         send(metricss);
-
-        LOGGER.info("Metrics was reported");
     }
 
     private void send(List<Metrics> metricss) {

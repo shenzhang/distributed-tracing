@@ -1,6 +1,6 @@
 package com.github.shenzhang.monitor.agent.reporter.sleuth;
 
-import com.github.shenzhang.monitor.agent.reporter.DistributedTracingReporter;
+import com.github.shenzhang.monitor.agent.tracing.TracingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.sleuth.Span;
@@ -13,7 +13,7 @@ import org.springframework.cloud.sleuth.Span;
  */
 public class SleuthSpanReporter implements org.springframework.cloud.sleuth.SpanReporter {
     @Autowired
-    private DistributedTracingReporter reporter;
+    private TracingRepository repository;
 
     @Value("${spring.application.name}")
     private String applicationName;
@@ -25,6 +25,7 @@ public class SleuthSpanReporter implements org.springframework.cloud.sleuth.Span
         if (span.getParents() != null && !span.getParents().isEmpty()) {
             mySpan.setParentId(Span.idToHex(span.getParents().get(0)));
         }
+
         mySpan.setTraceId(Span.idToHex(span.getTraceId()));
         mySpan.setName(span.getName());
         mySpan.setSource(applicationName);
@@ -33,6 +34,6 @@ public class SleuthSpanReporter implements org.springframework.cloud.sleuth.Span
         mySpan.setDuration(span.getEnd() - span.getBegin());
         mySpan.setSuccess(!span.tags().containsKey(Span.SPAN_ERROR_TAG_NAME));
 
-        reporter.report(mySpan);
+        repository.add(mySpan);
     }
 }

@@ -1,19 +1,21 @@
 package com.github.shenzhang.monitor.agent.reporter;
 
-import com.github.shenzhang.monitor.agent.configuration.TracingAgentProperties;
+import com.github.shenzhang.monitor.agent.configuration.MonitorAgentProperties;
 import com.github.shenzhang.monitor.agent.domain.Span;
+import com.github.shenzhang.monitor.agent.tracing.TracingRepository;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,18 +23,25 @@ import java.util.List;
  * Date: 5/3/17
  * Time: 12:36 AM.
  */
-public class DistributedTracingReporter implements Runnable {
+@Component
+public class DistributedTracingReporter {
     private static Logger LOGGER = LoggerFactory.getLogger(DistributedTracingReporter.class);
 
-    private List<Span> backlog = new ArrayList<>();
-    private List<Span> pending;
+    @Autowired
+    private TracingRepository repository;
 
     @Autowired
-    private TracingAgentProperties properties;
+    private MonitorAgentProperties properties;
 
-    public void report(Span span) {
+    @Scheduled(fixedRate = 5000)
+    public void report() {
+        List<Span> spans = repository.get();
+        if (spans.isEmpty()) {
+            return;
+        }
+
         try {
-            String urlString = properties.getMonitor().getUrl();
+            String urlString = properties.getTracing().getUrl();
 
             URL url = new URI(urlString).toURL();
             URLConnection urlConnection = url.openConnection();
@@ -51,20 +60,16 @@ public class DistributedTracingReporter implements Runnable {
 
             Gson gson = new GsonBuilder().create();
 
-            Span[] spans = new Span[]{span};
             outputStream.write(gson.toJson(spans).getBytes());
             outputStream.flush();
             outputStream.close();
 
             connection.getResponseCode();
             connection.disconnect();
+
+            LOGGER.info("Distributed tracing was reported");
         } catch (Exception e) {
             LOGGER.error("Send distributed-tracing span failed - {}:{}", e.getClass().getName(), e.getMessage());
         }
-    }
-
-    @Override
-    public void run() {
-
     }
 }

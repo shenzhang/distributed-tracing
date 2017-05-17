@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
  * Date: 2/8/17
  * Time: 3:31 PM.
  */
-@RestController
-public class CollectController {
+@RestController("/distributed-tracing")
+public class DistributedTracingCollectController {
     @Autowired
     private CollectSpanService spanService;
     private SpanDtoTranslator translator = new SpanDtoTranslator();

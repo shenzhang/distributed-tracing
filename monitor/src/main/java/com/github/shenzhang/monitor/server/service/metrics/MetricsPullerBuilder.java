@@ -1,6 +1,7 @@
 package com.github.shenzhang.monitor.server.service.metrics;
 
 import com.github.shenzhang.monitor.server.domain.Application;
+import com.github.shenzhang.monitor.server.service.MetricsCollector;
 import com.github.shenzhang.monitor.server.service.metrics.puller.MetricsPuller;
 import com.github.shenzhang.monitor.server.service.metrics.puller.ApiMetricsPuller;
 import org.springframework.beans.factory.annotation.Autowired;

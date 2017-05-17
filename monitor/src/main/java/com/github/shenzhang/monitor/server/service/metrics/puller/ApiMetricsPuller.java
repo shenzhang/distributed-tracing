@@ -4,9 +4,7 @@ import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.shenzhang.monitor.server.domain.Application;
-import com.github.shenzhang.monitor.server.domain.metrics.JvmMetrics;
-import com.github.shenzhang.monitor.server.domain.metrics.Metrics;
-import com.github.shenzhang.monitor.server.domain.metrics.SystemMetrics;
+import com.github.shenzhang.monitor.server.domain.Metrics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -56,31 +54,33 @@ public class ApiMetricsPuller extends MetricsPuller {
             List<Metrics> metricss = newArrayList();
 
             JsonNode loadNode = root.at(LOAD_POINTER);
-            SystemMetrics systemMetrics = new SystemMetrics();
-            systemMetrics.init(application);
-            systemMetrics.setLoad(loadNode.asDouble());
-            metricss.add(systemMetrics);
+            Metrics metrics = new Metrics(application);
+            metrics.addFieldValue("load", loadNode.asDouble(0D));
+            metricss.add(metrics);
 
-            JvmMetrics jvmMetrics = new JvmMetrics();
-            jvmMetrics.init(application);
-            jvmMetrics.setHeap(root.at(HEAP_POINTER).asInt(0) / 1024);
-            jvmMetrics.setUsedHeap(root.at(USED_HEAP_POINTER).asInt(0) / 1024);
-            metricss.add(jvmMetrics);
+            metrics = new Metrics(application);
+            metrics.addFieldValue("heap", root.at(HEAP_POINTER).asInt(0) / 1024);
+            metrics.addFieldValue("usedHeap", root.at(USED_HEAP_POINTER).asInt(0) / 1024);
+            metricss.add(metrics);
 
             collect(metricss);
         } catch (Exception e) {
-            LocalDateTime now = LocalDateTime.now();
-            if (lastException == null || !exceptionEquals(lastException, e)
-                    || Duration.between(lastExceptionTime, now).toMinutes() >= ERROR_LOG_INTERVAL_IN_SEC) {
-                lastException = e;
-                lastExceptionTime = now;
-                LOGGER.error("Get metrics failed from {}, {}:{}", metricsUrl, e.getClass().getName(), e.getMessage());
-            }
+            logExceptionIfNecessary(metricsUrl, e);
         }
     }
 
     public void setRestTemplate(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
+    }
+
+    private void logExceptionIfNecessary(String url, Exception e) {
+        LocalDateTime now = LocalDateTime.now();
+        if (lastException == null || !exceptionEquals(lastException, e)
+                || Duration.between(lastExceptionTime, now).toMinutes() >= ERROR_LOG_INTERVAL_IN_SEC) {
+            lastException = e;
+            lastExceptionTime = now;
+            LOGGER.error("Get metrics failed from {}, {}:{}", url, e.getClass().getName(), e.getMessage());
+        }
     }
 
     private boolean exceptionEquals(Exception previous, Exception latest) {

@@ -1,7 +1,7 @@
 package com.github.shenzhang.monitor.agent.aspect;
 
 import com.github.shenzhang.monitor.agent.domain.Span;
-import com.github.shenzhang.monitor.agent.reporter.DistributedTracingReporter;
+import com.github.shenzhang.monitor.agent.tracing.TracingRepository;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DistributedTracingAspect {
     @Autowired
-    private DistributedTracingReporter reporter;
+    private TracingRepository repository;
 
     @Around("@annotation(com.github.shenzhang.monitor.agent.annotation.DistributedTracing)")
     public Object logPerformance(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -36,7 +36,7 @@ public class DistributedTracingAspect {
             span.setEndTime(end);
             span.setDuration(end - begin);
 
-            reporter.report(span);
+            repository.add(span);
         }
     }
 }

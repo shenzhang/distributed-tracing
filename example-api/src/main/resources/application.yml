@@ -2,9 +2,15 @@ spring.application.name: example-api
 
 server.port: 10000
 
-tracing:
+monitor:
   agent:
-    monitor:
+    tracing:
+      enabled: true
       url: http://localhost:8080/spans
+      username: test
+      password: 123
+    metrics:
+      enabled: true
+      url: http://localhost:8080/all-metrics
       username: test
       password: 123

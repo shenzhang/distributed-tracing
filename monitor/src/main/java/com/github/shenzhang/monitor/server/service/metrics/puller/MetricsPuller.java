@@ -1,7 +1,7 @@
 package com.github.shenzhang.monitor.server.service.metrics.puller;
 
-import com.github.shenzhang.monitor.server.domain.metrics.Metrics;
-import com.github.shenzhang.monitor.server.service.metrics.MetricsCollector;
+import com.github.shenzhang.monitor.server.domain.Metrics;
+import com.github.shenzhang.monitor.server.service.MetricsCollector;
 
 import java.util.List;
 

@@ -1,9 +1,8 @@
 package com.github.shenzhang.monitor.server.dao.influxdb;
 
-import com.github.shenzhang.monitor.server.domain.metrics.JvmMetrics;
 import com.github.shenzhang.monitor.server.configuration.metrics.MetricsPullerProperties;
 import com.github.shenzhang.monitor.server.dao.MetricsDao;
-import com.github.shenzhang.monitor.server.domain.metrics.SystemMetrics;
+import com.github.shenzhang.monitor.server.domain.Metrics;
 import com.github.shenzhang.monitor.server.exception.DaoException;
 import org.influxdb.InfluxDB;
 import org.influxdb.dto.BatchPoints;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -29,41 +29,26 @@ public class MetricsDaoImpl implements MetricsDao, InitializingBean {
     private String database;
 
     @Override
-    public void addSystemMetrics(List<SystemMetrics> metricsList) throws DaoException {
+    public void addMetrics(List<Metrics> metricss) throws DaoException {
         BatchPoints batchPoints = BatchPoints.database(database)
                 .retentionPolicy("autogen")
                 .consistency(InfluxDB.ConsistencyLevel.ALL)
                 .build();
 
-        for (SystemMetrics metrics : metricsList) {
-            Point point = Point.measurement(metrics.getMeasurement())
-                    .time(metrics.getTime().getTime(), TimeUnit.MILLISECONDS)
-                    .tag("app", metrics.getApplication()).tag("host", metrics.getHost())
-                    .addField("load", metrics.getLoad())
-                    .build();
+        for (Metrics metrics : metricss) {
+            if (metrics.getFields() == null || metrics.getFields().isEmpty()) {
+                continue;
+            }
 
-            batchPoints.point(point);
-        }
+            Point.Builder pointBuilder = Point.measurement(metrics.getMeasurement())
+                    .time(metrics.getTime(), TimeUnit.MILLISECONDS)
+                    .tag("app", metrics.getApplication()).tag("host", metrics.getHost());
 
-        influxDB.write(batchPoints);
-    }
+            for (Map.Entry<String, Double> field : metrics.getFields().entrySet()) {
+                pointBuilder.addField(field.getKey(), field.getValue());
+            }
 
-    @Override
-    public void addJvmMetrics(List<JvmMetrics> metricsList) throws DaoException {
-        BatchPoints batchPoints = BatchPoints.database(database)
-                .retentionPolicy("autogen")
-                .consistency(InfluxDB.ConsistencyLevel.ALL)
-                .build();
-
-        for (JvmMetrics metrics : metricsList) {
-            Point point = Point.measurement(metrics.getMeasurement())
-                    .time(metrics.getTime().getTime(), TimeUnit.MILLISECONDS)
-                    .tag("app", metrics.getApplication()).tag("host", metrics.getHost())
-                    .addField("heap", metrics.getHeap())
-                    .addField("usedHeap", metrics.getUsedHeap())
-                    .build();
-
-            batchPoints.point(point);
+            batchPoints.point(pointBuilder.build());
         }
 
         influxDB.write(batchPoints);
@@ -73,6 +58,4 @@ public class MetricsDaoImpl implements MetricsDao, InitializingBean {
     public void afterPropertiesSet() throws Exception {
         this.database = this.properties.getInfluxdb().getDatabase();
     }
-
-
 }

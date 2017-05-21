@@ -1,5 +1,6 @@
 package com.github.shenzhang.monitor.server.controller;
 
+import com.github.shenzhang.monitor.agent.annotation.CountMetrics;
 import com.github.shenzhang.monitor.server.domain.User;
 import com.github.shenzhang.monitor.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,13 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping("/users")
+    @CountMetrics("GetUser")
     public List<User> getUsers() {
         return userService.getUsers();
+    }
+
+    @RequestMapping("/hello")
+    public String hello() {
+        return userService.sayHello();
     }
 }

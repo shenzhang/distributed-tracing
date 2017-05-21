@@ -1,4 +1,4 @@
-package com.github.shenzhang.monitor.agent.metrics;
+package com.github.shenzhang.monitor.agent.metrics.collector;
 
 import com.github.shenzhang.monitor.agent.domain.Metrics;
 

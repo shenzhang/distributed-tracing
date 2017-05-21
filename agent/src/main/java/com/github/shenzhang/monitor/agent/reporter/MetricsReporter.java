@@ -2,7 +2,7 @@ package com.github.shenzhang.monitor.agent.reporter;
 
 import com.github.shenzhang.monitor.agent.configuration.MonitorAgentProperties;
 import com.github.shenzhang.monitor.agent.domain.Metrics;
-import com.github.shenzhang.monitor.agent.metrics.MetricsCollector;
+import com.github.shenzhang.monitor.agent.metrics.collector.MetricsCollector;
 import com.google.gson.Gson;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -45,7 +45,7 @@ public class MetricsReporter implements InitializingBean {
     @Value("${spring.application.name}")
     private String application;
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 1000)
     public void report() {
         long now = new Date().getTime();
 

@@ -1,5 +1,6 @@
 package com.github.shenzhang.monitor.server.service;
 
+import com.github.shenzhang.monitor.agent.annotation.CountMetrics;
 import com.github.shenzhang.monitor.server.domain.User;
 import com.github.shenzhang.monitor.agent.annotation.DistributedTracing;
 import org.slf4j.Logger;
@@ -37,6 +38,11 @@ public class UserService {
         queryFromHttp();
 
         return Arrays.asList(generateRandomUser());
+    }
+
+    @CountMetrics("SayHelloService")
+    public String sayHello() {
+        return "hello world";
     }
 
     private void randomError() {

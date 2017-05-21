@@ -1,6 +1,7 @@
-package com.github.shenzhang.monitor.agent.metrics;
+package com.github.shenzhang.monitor.agent.metrics.collector;
 
 import com.github.shenzhang.monitor.agent.domain.Metrics;
+import com.github.shenzhang.monitor.agent.metrics.CountMetricsStore;
 import com.github.shenzhang.monitor.agent.tracing.TracingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,8 @@ public class ApplicationMetricsCollector implements MetricsCollector {
 
     @Autowired
     private TracingRepository tracingRepository;
+    @Autowired
+    private CountMetricsStore countMetricsStore;
 
     @Override
     public Metrics collect() {
@@ -24,10 +27,18 @@ public class ApplicationMetricsCollector implements MetricsCollector {
 
         tracing(metrics);
 
+        serviceCount(metrics);
+
         return metrics;
     }
 
     private void tracing(Metrics metrics) {
         metrics.addField("tracingBuffer", tracingRepository.count());
+    }
+
+    private void serviceCount(Metrics metrics) {
+        for (String name : countMetricsStore.getAllMetricsName()) {
+            metrics.addField(name, countMetricsStore.set(name, 0));
+        }
     }
 }

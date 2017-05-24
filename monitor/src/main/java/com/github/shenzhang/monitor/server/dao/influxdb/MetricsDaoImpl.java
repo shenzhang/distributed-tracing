@@ -30,6 +30,10 @@ public class MetricsDaoImpl implements MetricsDao, InitializingBean {
 
     @Override
     public void addMetrics(List<Metrics> metricss) throws DaoException {
+        if (metricss.isEmpty()) {
+            return;
+        }
+
         BatchPoints batchPoints = BatchPoints.database(database)
                 .retentionPolicy("autogen")
                 .consistency(InfluxDB.ConsistencyLevel.ALL)

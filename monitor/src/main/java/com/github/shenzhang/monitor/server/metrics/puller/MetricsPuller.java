@@ -1,4 +1,4 @@
-package com.github.shenzhang.monitor.server.service.metrics.puller;
+package com.github.shenzhang.monitor.server.metrics.puller;
 
 import com.github.shenzhang.monitor.server.domain.Metrics;
 import com.github.shenzhang.monitor.server.service.MetricsCollector;

@@ -31,12 +31,17 @@ import java.util.List;
 @Component
 public class MetricsReporter implements InitializingBean {
     private static final Logger LOGGER = LoggerFactory.getLogger(MetricsReporter.class);
+    private static final int BUFFER_SIZE = 3600;
 
     @Autowired
     private MonitorAgentProperties properties;
 
     @Autowired
     private List<MetricsCollector> collectors;
+
+    private Object bufferLock = new Object();
+    private List<Metrics> buffer = newBuffer();
+    private volatile List<Metrics> pending;
 
     private HttpClient httpClient = HttpClientBuilder.create().build();
 
@@ -46,7 +51,7 @@ public class MetricsReporter implements InitializingBean {
     private String application;
 
     @Scheduled(fixedRate = 1000)
-    public void report() {
+    public void collect() {
         long now = new Date().getTime();
 
         List<Metrics> metricss = new ArrayList<>(collectors.size());
@@ -60,10 +65,38 @@ public class MetricsReporter implements InitializingBean {
             metricss.add(metrics);
         }
 
-        send(metricss);
+        synchronized (bufferLock) {
+            if (buffer.size() + metricss.size() < BUFFER_SIZE) {
+                buffer.addAll(metricss);
+            }
+        }
+
     }
 
-    private void send(List<Metrics> metricss) {
+    @Scheduled(fixedRate = 5000)
+    public void report() {
+        synchronized (bufferLock) {
+            if (buffer.isEmpty()) {
+                return;
+            }
+
+            if (pending == null) {
+                pending = buffer;
+                buffer = newBuffer();
+            }
+        }
+
+        if (send(pending)) {
+            LOGGER.info("{} metrics was reported successfully", pending.size());
+            pending = null;
+        }
+    }
+
+    private List<Metrics> newBuffer() {
+        return new ArrayList<Metrics>(BUFFER_SIZE);
+    }
+
+    private boolean send(List<Metrics> metricss) {
         Gson gson = new Gson();
         HttpPost post = new HttpPost(properties.getMetrics().getUrl());
         post.setEntity(new StringEntity(gson.toJson(metricss), ContentType.APPLICATION_JSON));
@@ -71,11 +104,14 @@ public class MetricsReporter implements InitializingBean {
 
         try {
             int code = httpClient.execute(post).getStatusLine().getStatusCode();
-            if (code != 201) {
+            if (code >= 300) {
                 LOGGER.error("Send metrics failed - status code = ", code);
+                return false;
             }
+            return true;
         } catch (IOException e) {
             LOGGER.error("Send metrics failed - {}:{}", e.getClass().getName(), e.getMessage());
+            return false;
         }
     }
 

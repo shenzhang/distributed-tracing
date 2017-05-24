@@ -95,4 +95,7 @@ public class SystemMetricsCollector implements MetricsCollector {
             metrics.addField(timeKey, currentTime - previousTime);
         }
     }
+
+    public static void main(String[] args) {
+    }
 }

@@ -1,4 +1,4 @@
-package com.github.shenzhang.monitor.server.service.metrics;
+package com.github.shenzhang.monitor.server.metrics;
 
 import com.github.shenzhang.monitor.server.dao.MetricsDao;
 import com.github.shenzhang.monitor.server.domain.Application;

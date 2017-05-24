@@ -1,4 +1,4 @@
-package com.github.shenzhang;
+package com.github.shenzhang.example;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -14,12 +14,12 @@ import org.springframework.core.env.Environment;
 
 @SpringBootApplication
 @PropertySource({"classpath:application.yml"})
-public class Application {
+public class ExampleApplication {
     @Autowired
     private Environment environment;
 
     public static void main(String[] args) throws Exception {
-        SpringApplication application = new SpringApplication(Application.class);
+        SpringApplication application = new SpringApplication(ExampleApplication.class);
         application.run(args);
     }
 }

@@ -1,9 +1,9 @@
-package com.github.shenzhang.monitor.server.service.metrics;
+package com.github.shenzhang.monitor.server.metrics;
 
 import com.github.shenzhang.monitor.server.domain.Application;
 import com.github.shenzhang.monitor.server.service.MetricsCollector;
-import com.github.shenzhang.monitor.server.service.metrics.puller.MetricsPuller;
-import com.github.shenzhang.monitor.server.service.metrics.puller.ApiMetricsPuller;
+import com.github.shenzhang.monitor.server.metrics.puller.MetricsPuller;
+import com.github.shenzhang.monitor.server.metrics.puller.ApiMetricsPuller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Component;

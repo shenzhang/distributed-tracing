@@ -1,7 +1,7 @@
-package com.github.shenzhang.monitor.server.service;
+package com.github.shenzhang.example.service;
 
 import com.github.shenzhang.monitor.agent.annotation.CountMetrics;
-import com.github.shenzhang.monitor.server.domain.User;
+import com.github.shenzhang.example.domain.User;
 import com.github.shenzhang.monitor.agent.annotation.DistributedTracing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -73,6 +73,8 @@ public class MonitorAgentProperties implements SecurityPrerequisite {
         private String url;
         private String username;
         private String password;
+        private int reportInterval = 5000;
+        private int collectInterval = 1000;
 
         public String getUrl() {
             return url;
@@ -104,6 +106,22 @@ public class MonitorAgentProperties implements SecurityPrerequisite {
 
         public void setEnabled(boolean enabled) {
             this.enabled = enabled;
+        }
+
+        public int getReportInterval() {
+            return reportInterval;
+        }
+
+        public void setReportInterval(int reportInterval) {
+            this.reportInterval = reportInterval;
+        }
+
+        public int getCollectInterval() {
+            return collectInterval;
+        }
+
+        public void setCollectInterval(int collectInterval) {
+            this.collectInterval = collectInterval;
         }
     }
 }

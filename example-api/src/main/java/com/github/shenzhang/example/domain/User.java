@@ -1,4 +1,4 @@
-package com.github.shenzhang.monitor.server.domain;
+package com.github.shenzhang.example.domain;
 
 /**
  * User: Zhang Shen

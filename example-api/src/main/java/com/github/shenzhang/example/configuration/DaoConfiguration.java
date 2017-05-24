@@ -1,4 +1,4 @@
-package com.github.shenzhang.monitor.server.configuration;
+package com.github.shenzhang.example.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,8 +1,8 @@
-package com.github.shenzhang.monitor.server.controller;
+package com.github.shenzhang.example.controller;
 
 import com.github.shenzhang.monitor.agent.annotation.CountMetrics;
-import com.github.shenzhang.monitor.server.domain.User;
-import com.github.shenzhang.monitor.server.service.UserService;
+import com.github.shenzhang.example.domain.User;
+import com.github.shenzhang.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

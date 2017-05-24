@@ -1,4 +1,4 @@
-package com.github.shenzhang.monitor.server.service.metrics.puller;
+package com.github.shenzhang.monitor.server.metrics.puller;
 
 import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;

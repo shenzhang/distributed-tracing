@@ -87,7 +87,7 @@ public class MetricsReporter implements InitializingBean {
         }
 
         if (send(pending)) {
-            LOGGER.info("{} metrics was reported successfully", pending.size());
+            LOGGER.debug("{} metrics was reported successfully", pending.size());
             pending = null;
         }
     }
@@ -112,6 +112,12 @@ public class MetricsReporter implements InitializingBean {
         } catch (IOException e) {
             LOGGER.error("Send metrics failed - {}:{}", e.getClass().getName(), e.getMessage());
             return false;
+        }
+    }
+
+    public int getCurrentBufferSize() {
+        synchronized (bufferLock) {
+            return buffer.size();
         }
     }
 

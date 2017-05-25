@@ -1,6 +1,7 @@
 package com.github.shenzhang.monitor.agent.configuration;
 
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -28,10 +29,21 @@ public class HttpConnectionConfiguration {
         connManager.setDefaultMaxPerRoute(5);
         connManager.setMaxTotal(20);
 
-        this.httpClient = HttpClients.custom().setConnectionManager(connManager).build();
+        this.httpClient = HttpClients.custom()
+                .setDefaultRequestConfig(requestConfig())
+                .setConnectionManager(connManager)
+                .build();
         this.connectionManager = connManager;
 
         return this.httpClient;
+    }
+
+    private RequestConfig requestConfig() {
+        return RequestConfig.custom()
+                .setConnectionRequestTimeout(1000) // timeout to get a connection from connection manager
+                .setConnectTimeout(1000) // socket connection timeout
+                .setSocketTimeout(2 * 1000) // timeout to get data from remote
+                .build();
     }
 
     @Scheduled(fixedRate = 60 * 1000)

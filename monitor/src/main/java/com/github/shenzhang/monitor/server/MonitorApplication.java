@@ -14,6 +14,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 
 @SpringBootApplication
+@EnableScheduling
 @PropertySource({"classpath:application.yml"})
 public class MonitorApplication {
     @Autowired

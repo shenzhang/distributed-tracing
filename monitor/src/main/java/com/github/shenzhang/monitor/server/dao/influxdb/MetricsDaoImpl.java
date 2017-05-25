@@ -36,6 +36,7 @@ public class MetricsDaoImpl implements MetricsDao, InitializingBean {
 
         BatchPoints batchPoints = BatchPoints.database(database)
                 .retentionPolicy("autogen")
+//                .retentionPolicy("two-days")
                 .consistency(InfluxDB.ConsistencyLevel.ALL)
                 .build();
 

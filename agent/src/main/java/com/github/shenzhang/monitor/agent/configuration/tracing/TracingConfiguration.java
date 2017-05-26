@@ -16,7 +16,6 @@ import org.springframework.context.annotation.Configuration;
  * Time: 11:56 PM.
  */
 @Configuration
-@ConditionalOnProperty(MonitorAgentProperties.Tracing.TOGGLE)
 public class TracingConfiguration {
     @Bean
     @ConditionalOnClass({org.springframework.cloud.sleuth.SpanReporter.class})
@@ -25,6 +24,7 @@ public class TracingConfiguration {
     }
 
     @Bean
+    @ConditionalOnProperty(MonitorAgentProperties.Tracing.TOGGLE)
     public DistributedTracingReporter tracingReporter() {
         return new DistributedTracingReporter();
     }

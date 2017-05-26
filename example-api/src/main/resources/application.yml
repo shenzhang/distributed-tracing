@@ -5,7 +5,7 @@ server.port: 10000
 monitor:
   agent:
     tracing:
-      enabled: true
+      enabled: false
       url: http://localhost:8080/spans
       username: test
       password: 123

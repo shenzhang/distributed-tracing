@@ -1,5 +1,6 @@
 package com.github.shenzhang.monitor.agent.configuration.env;
 
+import com.github.shenzhang.monitor.agent.configuration.MonitorAgentProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.env.EnvironmentPostProcessor;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -12,6 +13,10 @@ import org.springframework.core.env.ConfigurableEnvironment;
 public class AgentEnvironmentPostProcessor implements EnvironmentPostProcessor {
     @Override
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
-
+        String enableTracing = environment.getProperty(MonitorAgentProperties.Tracing.TOGGLE);
+        if (enableTracing == null || !enableTracing.toLowerCase().equals("true")) {
+//            System.setProperty("spring.sleuth.enabled", "false");
+            System.setProperty("spring.sleuth.sampler.percentage", "0");
+        }
     }
 }

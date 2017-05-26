@@ -1,5 +1,6 @@
 package com.github.shenzhang.monitor.agent.reporter.sleuth;
 
+import com.github.shenzhang.monitor.agent.configuration.MonitorAgentProperties;
 import com.github.shenzhang.monitor.agent.tracing.TracingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +14,8 @@ import org.springframework.cloud.sleuth.Span;
  */
 public class SleuthSpanReporter implements org.springframework.cloud.sleuth.SpanReporter {
     @Autowired
+    private MonitorAgentProperties properties;
+    @Autowired
     private TracingRepository repository;
 
     @Value("${spring.application.name}")
@@ -20,6 +23,10 @@ public class SleuthSpanReporter implements org.springframework.cloud.sleuth.Span
 
     @Override
     public void report(Span span) {
+        if (!properties.getTracing().isEnabled()) {
+            return;
+        }
+
         com.github.shenzhang.monitor.agent.domain.Span mySpan = new com.github.shenzhang.monitor.agent.domain.Span();
         mySpan.setId(Span.idToHex(span.getSpanId()));
         if (span.getParents() != null && !span.getParents().isEmpty()) {

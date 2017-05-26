@@ -1,7 +1,6 @@
 package com.github.shenzhang.monitor.agent.tracing;
 
 import com.github.shenzhang.monitor.agent.domain.Span;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,6 @@ import java.util.List;
  * Date: 5/17/17
  * Time: 3:16 PM.
  */
-@Component
 public class TracingRepository {
     private static final int CAPACITY = 1000;
     private List<Span> buffer = newBuffer();

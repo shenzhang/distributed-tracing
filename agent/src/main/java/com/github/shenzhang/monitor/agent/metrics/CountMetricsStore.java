@@ -1,7 +1,5 @@
 package com.github.shenzhang.monitor.agent.metrics;
 
-import org.springframework.stereotype.Component;
-
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -13,7 +11,6 @@ import java.util.concurrent.atomic.AtomicLong;
  * Date: 5/19/17
  * Time: 7:02 PM.
  */
-@Component
 public class CountMetricsStore {
     private Map<String, AtomicLong> counters = new ConcurrentHashMap<>();
 

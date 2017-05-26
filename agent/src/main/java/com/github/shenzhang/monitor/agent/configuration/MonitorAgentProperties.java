@@ -30,6 +30,7 @@ public class MonitorAgentProperties implements SecurityPrerequisite {
     }
 
     public static class Tracing {
+        public static final String TOGGLE = "monitor.agent.tracing.enabled";
         private boolean enabled;
         private String url;
         private String username;
@@ -69,6 +70,7 @@ public class MonitorAgentProperties implements SecurityPrerequisite {
     }
 
     public static class Metrics {
+        public static final String TOGGLE = "monitor.agent.metrics.enabled";
         private boolean enabled;
         private String url;
         private String username;

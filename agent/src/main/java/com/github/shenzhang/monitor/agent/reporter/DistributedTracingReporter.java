@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.List;
@@ -25,7 +24,6 @@ import java.util.List;
  * Date: 5/3/17
  * Time: 12:36 AM.
  */
-@Component
 public class DistributedTracingReporter {
     private static Logger LOGGER = LoggerFactory.getLogger(DistributedTracingReporter.class);
 

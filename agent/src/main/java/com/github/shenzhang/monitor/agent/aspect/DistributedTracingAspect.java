@@ -1,11 +1,13 @@
 package com.github.shenzhang.monitor.agent.aspect;
 
+import com.github.shenzhang.monitor.agent.configuration.MonitorAgentProperties;
 import com.github.shenzhang.monitor.agent.domain.Span;
 import com.github.shenzhang.monitor.agent.tracing.TracingRepository;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
+@ConditionalOnProperty(MonitorAgentProperties.Tracing.TOGGLE)
 public class DistributedTracingAspect {
     @Autowired
     private TracingRepository repository;

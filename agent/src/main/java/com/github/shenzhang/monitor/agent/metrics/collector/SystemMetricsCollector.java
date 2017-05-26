@@ -1,7 +1,6 @@
 package com.github.shenzhang.monitor.agent.metrics.collector;
 
 import com.github.shenzhang.monitor.agent.domain.Metrics;
-import org.springframework.stereotype.Component;
 
 import java.lang.management.GarbageCollectorMXBean;
 import java.lang.management.ManagementFactory;
@@ -16,7 +15,6 @@ import static com.github.shenzhang.monitor.agent.metrics.collector.SystemMetrics
  * Date: 5/17/17
  * Time: 2:57 PM.
  */
-@Component
 public class SystemMetricsCollector implements MetricsCollector {
     interface SystemMetrics {
         String MEM_USED = "memUsed";

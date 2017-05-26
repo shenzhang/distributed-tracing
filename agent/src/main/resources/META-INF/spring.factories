@@ -1,2 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.github.shenzhang.monitor.agent.configuration.MonitorAgentConfiguration
+  com.github.shenzhang.monitor.agent.configuration.MonitorAgentConfiguration
+
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com.github.shenzhang.monitor.agent.configuration.env.AgentEnvironmentPostProcessor

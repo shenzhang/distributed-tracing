@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -30,7 +29,6 @@ import java.util.List;
  * Date: 5/15/17
  * Time: 4:47 PM.
  */
-@Component
 public class MetricsReporter implements InitializingBean {
     private static final Logger LOGGER = LoggerFactory.getLogger(MetricsReporter.class);
     private static final int BUFFER_SIZE = 3600;

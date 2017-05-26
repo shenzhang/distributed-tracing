@@ -5,14 +5,12 @@ import com.github.shenzhang.monitor.agent.metrics.CountMetricsStore;
 import com.github.shenzhang.monitor.agent.reporter.MetricsReporter;
 import com.github.shenzhang.monitor.agent.tracing.TracingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  * User: Zhang Shen
  * Date: 5/17/17
  * Time: 3:24 PM.
  */
-@Component
 public class ApplicationMetricsCollector implements MetricsCollector {
     private static final String MEASUREMENT = "application";
 

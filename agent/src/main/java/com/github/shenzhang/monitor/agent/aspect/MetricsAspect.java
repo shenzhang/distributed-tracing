@@ -1,12 +1,14 @@
 package com.github.shenzhang.monitor.agent.aspect;
 
 import com.github.shenzhang.monitor.agent.annotation.CountMetrics;
+import com.github.shenzhang.monitor.agent.configuration.MonitorAgentProperties;
 import com.github.shenzhang.monitor.agent.metrics.CountMetricsStore;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
+@ConditionalOnProperty(MonitorAgentProperties.Metrics.TOGGLE)
 public class MetricsAspect {
     @Autowired
     private CountMetricsStore countMetricsStore;
